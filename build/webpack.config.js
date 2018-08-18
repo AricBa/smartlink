@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: ['babel-polyfill', './src/index.js'],
@@ -12,7 +13,11 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    overlay: true
+    overlay: true,
+    inline: true,
+    compress: true,
+    host: '127.0.0.1',
+    port: 8080
   },
   resolve: {
     alias: {
@@ -60,13 +65,18 @@ module.exports = {
               'vue-style-loader',
               'css-loader',
               'sass-loader?indentedSyntax'
-            ]
+            ],
           }
         }
       },
       {
         test: /\.pug$/,
-        loader: 'pug-loader'
+        oneOf: [{
+          use: ['pug-plain-loader']
+        }, {
+          exclude: /\.vue$/,
+          use: ['raw-loader', 'pug-plain-loader']
+        }]
       }
     ]
   },
@@ -75,6 +85,6 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       template: './src/template/index.html',
-    })
+    }),
   ]
 }

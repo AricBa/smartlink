@@ -1,7 +1,7 @@
 <template lang="pug">
-    h1 {{msg}}
-      //- img(src="./assets/imgs/logo.jpeg")
-      //- input(type='text' v-model="msg")
+    #app {{msg}}
+      img(src="./assets/imgs/logo.jpeg")
+      input(type='text' v-model="msg")
 </template>
 
 <script>
@@ -16,6 +16,7 @@
     },
     created() {
       this.fetchData()
+      console.log('testse')
     },
     methods: {
       async fetchData() {
@@ -30,8 +31,9 @@
   #app {
     font-family: Arial, Helvetica, sans-serif;
 
-    h1 {
-      color: green;
+    img {
+      width: 100%;
+      height: 300px;
     }
   }
 </style>
