@@ -2,10 +2,10 @@
   "name": "smartlink",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --open --config build/webpack.config.js --hot --mode development",
+    "dev": "node build/dev-server.js",
     "build": "webpack --progerss --hide-modules --mode production"
   },
   "keywords": [],
@@ -19,6 +19,9 @@
     "babel-preset-stage-3": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^1.0.0",
+    "eslint": "^5.4.0",
+    "eslint-config-enough": "^0.3.4",
+    "eslint-loader": "^2.1.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
@@ -35,6 +38,7 @@
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5"
+    "webpack-dev-server": "^3.1.5",
+    "xml-loader": "^1.2.1"
   }
 }

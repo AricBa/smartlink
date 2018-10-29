@@ -1,34 +1,39 @@
-const path = require('path')
-const webpack = require('webpack')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin')
+const config = require('../env');
+const path = require('path');
+const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: ['babel-polyfill', './src/index.js'],
+  mode: 'development',
+  entry: ['babel-polyfill', `./src/${config.default_module}/index.js`],
+  devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'js/[name]-[hash].js'
+    filename: 'js/[name].[hash].js'
   },
   devServer: {
-    historyApiFallback: true,
+    contentBase: './dist',
+    hot: true
+    /* historyApiFallback: true,
     overlay: true,
     inline: true,
     compress: true,
     host: '127.0.0.1',
-    port: 8080
+    port: 8080 */
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      vue$: 'vue/dist/vue.esm.js'
     }
   },
   module: {
     rules: [
       {
         test: /\.js$/,
-        loader: "babel-loader", 
+        loader: 'babel-loader',
         exclude: /node_modules/
       },
       {
@@ -56,35 +61,35 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            'scss': [
-              'vue-style-loader',
-              'css-loader',
-              'sass-loaderzs'
-            ],
-            'sass': [
+            scss: ['vue-style-loader', 'css-loader', 'sass-loaderzs'],
+            sass: [
               'vue-style-loader',
               'css-loader',
               'sass-loader?indentedSyntax'
-            ],
+            ]
           }
         }
       },
       {
         test: /\.pug$/,
-        oneOf: [{
-          use: ['pug-plain-loader']
-        }, {
-          exclude: /\.vue$/,
-          use: ['raw-loader', 'pug-plain-loader']
-        }]
+        oneOf: [
+          {
+            use: ['pug-plain-loader']
+          },
+          {
+            exclude: /\.vue$/,
+            use: ['raw-loader', 'pug-plain-loader']
+          }
+        ]
       }
     ]
   },
   plugins: [
     new VueLoaderPlugin(),
     new CleanWebpackPlugin(['dist']),
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: './src/template/index.html',
-    }),
+      template: './src/template/index.html'
+    })
   ]
-}
+};

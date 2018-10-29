@@ -1,6 +1,5 @@
 <template lang="pug">
     #app {{msg}}
-      img(src="./assets/imgs/logo.jpeg")
       input(type='text' v-model="msg")
 </template>
 
@@ -16,7 +15,6 @@
     },
     created() {
       this.fetchData()
-      console.log('testse')
     },
     methods: {
       async fetchData() {
